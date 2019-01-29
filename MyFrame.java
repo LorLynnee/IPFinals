@@ -33,8 +33,28 @@ public class MyFrame extends JFrame implements KeyListener{
 		else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 			drawing.moveRight();
 			System.out.println("pos:" + drawing.x + ", " + drawing.y);
-
 		}
+		else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+			drawing.attack();
+			System.out.println("attack!");
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_SPACE){
+			drawing.jump();
+			System.out.println("jump!");
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_SHIFT){
+			drawing.slide();
+			System.out.println("slide!");
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_S){
+			drawing.swim();
+			System.out.println("swim!");
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_B){
+			drawing.bow();
+			System.out.println("bow!");
+		}
+
 		drawing.reloadImage();
 	}
 
@@ -46,18 +66,15 @@ public class MyFrame extends JFrame implements KeyListener{
 
 	}
 
-	public static final Color LIGHT_RED = new Color(255,51,51);
-
 
 	public static void main(String args[]){
 
 		MyFrame gameFrame = new MyFrame();
 
-		gameFrame.setSize(600,600);
+		gameFrame.setSize(780,400);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setVisible(true);
 		gameFrame.getContentPane().add(gameFrame.drawing);
-		gameFrame.getContentPane().setBackground(LIGHT_RED);
 		gameFrame.addKeyListener(gameFrame);
 		System.out.println("Practical Programming");
 	}
