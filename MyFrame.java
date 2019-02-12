@@ -6,7 +6,7 @@ import java.awt.Color;
 public class MyFrame extends JFrame implements KeyListener{
 
 	 Draw drawing;
-
+ 
 	 public MyFrame(){
 	 	this.drawing = new Draw();
 	 }
@@ -46,7 +46,7 @@ public class MyFrame extends JFrame implements KeyListener{
 			drawing.slide();
 			System.out.println("slide!");
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_S){
+		else if(e.getKeyCode() == KeyEvent.VK_W){
 			drawing.swim();
 			System.out.println("swim!");
 		}
@@ -54,9 +54,13 @@ public class MyFrame extends JFrame implements KeyListener{
 			drawing.bow();
 			System.out.println("bow!");
 		}
+		else if(e.getKeyCode() == KeyEvent.VK_S){
+			drawing.spawnEnemy();
+		}
 
 		drawing.reloadImage();
 	}
+
 
 	public void keyReleased(KeyEvent e){
 
