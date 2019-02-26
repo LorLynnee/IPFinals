@@ -1,7 +1,6 @@
 import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.Color;
 
 public class MyFrame extends JFrame implements KeyListener{
 
@@ -34,25 +33,9 @@ public class MyFrame extends JFrame implements KeyListener{
 			drawing.moveRight();
 			System.out.println("pos:" + drawing.x + ", " + drawing.y);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+		else if(e.getKeyCode() == KeyEvent.VK_SPACE){
 			drawing.attack();
 			System.out.println("attack!");
-		}
-		else if(e.getKeyCode() == KeyEvent.VK_SPACE){
-			drawing.jump();
-			System.out.println("jump!");
-		}
-		else if(e.getKeyCode() == KeyEvent.VK_SHIFT){
-			drawing.slide();
-			System.out.println("slide!");
-		}
-		else if(e.getKeyCode() == KeyEvent.VK_W){
-			drawing.swim();
-			System.out.println("swim!");
-		}
-		else if(e.getKeyCode() == KeyEvent.VK_B){
-			drawing.bow();
-			System.out.println("bow!");
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_S){
 			drawing.spawnEnemy();
@@ -75,7 +58,7 @@ public class MyFrame extends JFrame implements KeyListener{
 
 		MyFrame gameFrame = new MyFrame();
 
-		gameFrame.setSize(780,400);
+		gameFrame.setSize(820,375);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setVisible(true);
 		gameFrame.getContentPane().add(gameFrame.drawing);

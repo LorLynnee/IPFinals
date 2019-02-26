@@ -16,8 +16,8 @@ public class Draw extends JComponent{
 	public URL resource = getClass().getResource("run0.png");
 
 	// circle's position
-	public int x = 300;
-	public int y = 300;
+	public int x = 150;
+	public int y = 200;
 	public int height = 0;
 	public int width = 0;
 
@@ -28,7 +28,7 @@ public class Draw extends JComponent{
 
 	// enemy
 	public int enemyCount;
-	Monster[] monsters = new Monster[10];
+	Monster[] monsters = new Monster[20];
 
 
 	public Draw(){         
@@ -48,6 +48,7 @@ public class Draw extends JComponent{
 
 		startGame();
 	}
+
 
 	public void startGame(){
 		Thread gameThread = new Thread(new Runnable(){
@@ -72,8 +73,8 @@ public class Draw extends JComponent{
 
 
 	public void spawnEnemy(){
-		if(enemyCount < 10){
-			monsters[enemyCount] = new Monster(randomizer.nextInt(100), randomizer.nextInt(100), this);
+		if(enemyCount < 20){
+			monsters[enemyCount] = new Monster(randomizer.nextInt(300), randomizer.nextInt(300), this);
 			enemyCount++;
 		}
 	}
@@ -131,183 +132,98 @@ public class Draw extends JComponent{
 					}catch (InterruptedException e){
 						e.printStackTrace();
 					}
-				}
-			}                                            
+					for(int x=0; x<monsters.length; x++){
+                    if(monsters[x]!=null){
+                        if(monsters[x].contact){
+                            monsters[x].life = monsters[x].life - 5;
+                        }
+                    }
+                }
+            }
+        }                                       
 		});
 		thread1.start();
 	}
 
-		public void jumpAnimation(){
-		Thread thread2 = new Thread(new Runnable(){
-			public void run(){
-				for (int ctr = 0; ctr < 4; ctr++){
-					try {
-						if(ctr==3){
-							resource = getClass().getResource("run0.png");
-						}
-						else{
-							resource = getClass().getResource("jump"+ctr+".png");
-						}
-						try{
-							image = ImageIO.read(resource);
-						}
-						catch(IOException e){
-							e.printStackTrace();
-						}
-						repaint();
-						Thread.sleep(100);				
-
-					}catch (InterruptedException e){
-						e.printStackTrace();
-					}
-				}
-			}                                              
-
-		});
-		thread2.start();
-	}
-	public void slideAnimation(){
-		Thread thread3 = new Thread(new Runnable(){
-			public void run(){
-				for (int ctr = 0; ctr < 2; ctr++){
-					try {
-						if(ctr==1){
-							resource = getClass().getResource("run0.png");
-						}
-						else{
-							resource = getClass().getResource("slide"+ctr+".png");
-						}
-						try{
-							image = ImageIO.read(resource);
-						}
-						catch(IOException e){
-							e.printStackTrace();
-						}
-						repaint();
-						Thread.sleep(100);				
-
-					}catch (InterruptedException e){
-						e.printStackTrace();
-					}
-				}
-			}                                              
-
-		});
-		thread3.start();
-	}
-	public void swimAnimation(){
-		Thread thread4 = new Thread(new Runnable(){
-			public void run(){
-				for (int ctr = 0; ctr < 4; ctr++){
-					try {
-						if(ctr==3){
-							resource = getClass().getResource("run0.png");
-						}
-						else{
-							resource = getClass().getResource("swim"+ctr+".png");
-						}
-						try{
-							image = ImageIO.read(resource);
-						}
-						catch(IOException e){
-							e.printStackTrace();
-						}
-						repaint();
-						Thread.sleep(100);				
-
-					}catch (InterruptedException e){
-						e.printStackTrace();
-					}
-				}
-			}                                              
-
-		});
-		thread4.start();
-	}
-
-	public void bowAnimation(){
-		Thread thread5 = new Thread(new Runnable(){
-			public void run(){
-				for (int ctr = 0; ctr < 9; ctr++){
-					try {
-						if(ctr==8){
-							resource = getClass().getResource("run0.png");
-						}
-						else{
-							resource = getClass().getResource("bow"+ctr+".png");
-						}
-						try{
-							image = ImageIO.read(resource);
-						}
-						catch(IOException e){
-							e.printStackTrace();
-						}
-						repaint();
-						Thread.sleep(100);				
-
-					}catch (InterruptedException e){
-						e.printStackTrace();
-					}
-				}
-			}                                              
-
-		});
-		thread5.start();
-	}
 	
-
 	public void attack(){
 		attackAnimation();
-	}
-
-	public void jump(){
-		jumpAnimation();
-		
-	}
-	public void slide(){
-		slideAnimation();
+	}		
 
 
-	}
-	public void swim(){
-		swimAnimation();
-		
-
-	}
-	public void bow(){
-		bowAnimation();
-		
-
-	}
 	public void moveUp(){
 		y = y - 5;
 		repaint();
-		
+		checkCollision();
 
 	}
 
 	public void moveDown(){
 		y = y + 5;
 		repaint();
-		
+		checkCollision();
+
 	}
 	public void moveLeft(){
 		x = x - 5;
 		repaint();
-		
+		checkCollision();
 
 	}
 
 	public void moveRight(){
 		x = x + 5;
 		repaint();
+		checkCollision();
 	}
 
 	
+public void checkCollision(){
+		int xChecker = x + width;
+		int yChecker = y;
 
+		for(int x=0; x<monsters.length; x++){
+			boolean collideX = false;
+			boolean collideY = false;
+
+			if(monsters[x]!=null){
+				monsters[x].contact = false;
+
+				if(yChecker > monsters[x].yPos){
+					if(yChecker-monsters[x].yPos < monsters[x].height){
+						collideY = true;
+						System.out.println("collideY");
+					}
+				}
+				else{
+					if(monsters[x].yPos - (yChecker+height) < monsters[x].height){
+						collideY = true;
+						System.out.println("collideY");
+					}
+				}
+
+				if(xChecker > monsters[x].xPos){
+					if((xChecker-width)-monsters[x].xPos < monsters[x].width){
+						collideX = true;
+						System.out.println("collideX");
+					}
+				}
+				else{
+					if(monsters[x].xPos-xChecker < monsters[x].width){
+						collideX = true;
+						System.out.println("collideX");
+					}
+				}
+			}
+
+			if(collideX && collideY){
+				System.out.println("collision!");
+				monsters[x].contact = true;
+			}
+		}
+	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		g.setColor(Color.YELLOW);
 		g.drawImage(backgroundImage, 0, 0, this);
 		g.drawImage(image, x, y, this);
 
