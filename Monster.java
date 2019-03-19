@@ -105,7 +105,7 @@ public class Monster{
 		if(alive){
 			Thread monThread = new Thread(new Runnable(){
 				public void run(){
-					for(int ctr = 0; ctr < 5; ctr++){
+					for(int ctr = 0; ctr < 10; ctr++){
 						try {					
 							resource = getClass().getResource("deadski/die"+ctr+".png");
 							

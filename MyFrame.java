@@ -7,9 +7,11 @@ import java.awt.event.KeyListener;
 public class MyFrame extends JFrame implements KeyListener{
 
 	 Draw drawing;
+	 Sound sound;
  
 	 public MyFrame(){
 	 	this.drawing = new Draw();
+	 	this.sound = new Sound();
 	 }
 	 
 
@@ -39,8 +41,16 @@ public class MyFrame extends JFrame implements KeyListener{
 			drawing.attack();
 			System.out.println("attack!");
 		}
+		else if(e.getKeyCode() == KeyEvent.VK_B){
+			drawing.bow();
+			System.out.println("bow!");
+		}
 		else if(e.getKeyCode() == KeyEvent.VK_S){
 			drawing.spawnEnemy();
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_M){
+			sound.play();
+			System.out.println("music!");
 		}
 
 		drawing.reloadImage();

@@ -144,10 +144,48 @@ public class Draw extends JComponent{
 		});
 		thread1.start();
 	}
+	public void bowAnimation(){
+		Thread thread2 = new Thread(new Runnable(){
+			public void run(){
+				for (int ctr = 0; ctr < 9; ctr++){
+					try {
+						if(ctr==8){
+							resource = getClass().getResource("run0.png");
+						}
+						else{
+							resource = getClass().getResource("bow"+ctr+".png");
+						}
+						try{
+							image = ImageIO.read(resource);
+						}
+						catch(IOException e){
+							e.printStackTrace();
+						}
+						repaint();
+						Thread.sleep(100);				
+
+					}catch (InterruptedException e){
+						e.printStackTrace();
+					}
+					for(int x=0; x<monsters.length; x++){
+                    if(monsters[x]!=null){
+                        if(monsters[x].contact){
+                            monsters[x].life = monsters[x].life - 5;
+                        }
+                    }
+                }
+            }
+        }                                       
+		});
+		thread2.start();
+	}
 
 	
 	public void attack(){
 		attackAnimation();
+	}	
+	public void bow(){
+		bowAnimation();
 	}		
 
 
